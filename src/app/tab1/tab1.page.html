@@ -13,5 +13,21 @@
     </ion-toolbar>
   </ion-header>
 
-  <app-explore-container name="Tab 1 page"></app-explore-container>
+  <ion-button color="danger" (click)="fetchData()">
+    Get data from API
+  </ion-button>
+
+  <div>
+    <div *ngIf="data.definitions">
+      <div *ngIf="data.definitions[0]">
+        <div *ngIf="data.definitions[0].definition">
+          {{data.definitions[0].definition}}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="word$ | async; let word">
+    {{word.definitions[0].definition}}
+  </div>
 </ion-content>
