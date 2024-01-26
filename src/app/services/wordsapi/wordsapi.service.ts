@@ -16,6 +16,6 @@ export class WordsApiService {
     const headers = new HttpHeaders()
       .set('X-RapidAPI-Key', environment.apiToken)
       .set('X-RapidAPI-Host', 'wordsapiv1.p.rapidapi.com');
-    return this.http.get(`${environment.baseUrl}/words/${word}/definitions`, { headers });
+    return this.http.get(`${environment.baseUrl}/words/${word}`, { headers });
   }
 }

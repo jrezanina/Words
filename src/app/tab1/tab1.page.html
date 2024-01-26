@@ -3,6 +3,11 @@
     <ion-title>
       Tab 1
     </ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="openSettings()">
+        <ion-icon name="cog" slot="icon-only"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -18,16 +23,16 @@
   </ion-button>
 
   <div>
-    <div *ngIf="data.definitions">
-      <div *ngIf="data.definitions[0]">
-        <div *ngIf="data.definitions[0].definition">
-          {{data.definitions[0].definition}}
+    <div *ngIf="data.results">
+      <div *ngIf="data.results[0]">
+        <div *ngIf="data.results[0].definition">
+          {{data.results[0].definition}}
         </div>
       </div>
     </div>
   </div>
 
   <div *ngIf="word$ | async; let word">
-    {{word.definitions[0].definition}}
+    {{word.results[0].definition}}
   </div>
 </ion-content>

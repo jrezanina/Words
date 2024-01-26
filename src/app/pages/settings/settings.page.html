@@ -1,0 +1,24 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Settings</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">
+        Close
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Settings</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-list [formGroup]="form">
+    <ion-item *ngFor="let word of words; let i = index">
+      <ion-checkbox slot="start" [value]="i" formControlName="ch{{i + 1}}"></ion-checkbox>
+      <ion-label>{{word.word}}</ion-label>
+    </ion-item>
+  </ion-list>
+</ion-content>
