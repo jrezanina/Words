@@ -7,6 +7,8 @@ import {environment} from "../../../environments/environment";
 })
 export class WordsApiService {
 
+  detail?: any;
+
   constructor(
     private http: HttpClient
   ) {

@@ -9,6 +9,10 @@ const routes: Routes = [
   {
     path: 'settings',
     loadChildren: () => import('./pages/settings/settings.module').then( m => m.SettingsPageModule)
+  },
+  {
+    path: 'detail',
+    loadChildren: () => import('./pages/word-detail/word-detail.module').then( m => m.WordDetailPageModule)
   }
 ];
 @NgModule({

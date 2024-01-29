@@ -41,12 +41,11 @@
 
     <ng-container *ngFor="let item$ of words$">
       <ng-container *ngIf="item$ | async; let word">
-        <ion-card>
+        <ion-card routerLink="/detail" (click)="setDetailData(word)">
           <ion-card-header>
             <ion-card-title>{{word.word}}</ion-card-title>
             <ion-card-subtitle>{{word.syllables.count}} Syllables</ion-card-subtitle>
           </ion-card-header>
-
           <ion-card-content *ngFor="let result of word.results; let i = index">
             {{i + 1}}. {{result.definition}}
           </ion-card-content>

@@ -1,6 +1,6 @@
 import {Component} from '@angular/core';
 import {WordsApiService} from "../services/wordsapi/wordsapi.service";
-import {Observable} from "rxjs";
+import {firstValueFrom, Observable} from "rxjs";
 import {ModalController} from "@ionic/angular";
 import {SettingsPage} from "../pages/settings/settings.page";
 import {WordsService} from "../services/words/words.service";
@@ -11,13 +11,11 @@ import {WordsService} from "../services/words/words.service";
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-
   data: any = {};
 
   word$: Observable<any>;
 
   words$: Observable<any>[] = [];
-
 
   constructor(
     private wordsApiService: WordsApiService,
@@ -27,24 +25,25 @@ export class Tab1Page {
     this.initWords();
     this.word$ = this.wordsApiService.getByWord$("car")
   }
-  private initWords() {
+
+  private async initWords() {
     this.words$ = [];
-    this.wordsService.words.forEach(word => {
+    const wordList = await firstValueFrom(this.wordsService.words$)
+    wordList.forEach(word => {
       if (word.homepage) {
         this.words$.push(
           this.wordsApiService.getByWord$(word.word)
         )
       }
-    });
+    })
   }
+
   fetchData() {
     this.wordsApiService.getByWord$("car").subscribe(data => {
       this.data = data;
     })
   }
-
   async openSettings() {
-
     const modal = await this.modalCtrl.create({
       component: SettingsPage,
     });
@@ -54,6 +53,9 @@ export class Tab1Page {
     modal.onWillDismiss().then(_ => {
       this.initWords();
     });
+  }
 
+  setDetailData(word: any) {
+    this.wordsApiService.detail = word;
   }
 }

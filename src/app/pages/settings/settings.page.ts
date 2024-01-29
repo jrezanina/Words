@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {ModalController} from "@ionic/angular";
 import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
 import {Word, WordsService} from "../../services/words/words.service";
+import {firstValueFrom} from "rxjs";
 
 @Component({
   selector: 'app-settings',
@@ -10,7 +11,7 @@ import {Word, WordsService} from "../../services/words/words.service";
 })
 export class SettingsPage implements OnInit {
 
-  words: Word[];
+  words: Word[] = [];
 
   form: FormGroup;
 
@@ -19,13 +20,11 @@ export class SettingsPage implements OnInit {
     private wordsService: WordsService,
     private fb: FormBuilder
   ) {
-
-    this.words = this.wordsService.words
-
     this.form = this.fb.group({
     })
-
-    this.words.forEach((word, i) => {
+    firstValueFrom(this.wordsService.words$).then(words => {
+      this.words = words;
+      words.forEach((word, i) => {
       this.form.addControl("ch" + (i + 1), new FormControl(word.homepage));
     })
 
@@ -33,10 +32,11 @@ export class SettingsPage implements OnInit {
       this.words.forEach((word, i) => {
         this.wordsService.setHome(i, data["ch" + (i + 1)]);
       })
-    })
+    })})
   }
 
   ngOnInit() {
+
   }
 
   async dismiss() {
