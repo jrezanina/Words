@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ModalController} from "@ionic/angular";
-import {FormBuilder, FormGroup} from "@angular/forms";
+import {FormBuilder, FormGroup, FormControl} from "@angular/forms";
+import {Word, WordsService} from "../../services/words/words.service";
 
 @Component({
   selector: 'app-settings',
@@ -8,31 +9,30 @@ import {FormBuilder, FormGroup} from "@angular/forms";
   styleUrls: ['./settings.page.scss'],
 })
 export class SettingsPage implements OnInit {
-  words: any[] = [
-    {
-      word: "car",
-      homepage: false
-    },
-    {
-      word: "word",
-      homepage: false
-    },
-  ]
+
+  words: Word[];
 
   form: FormGroup;
 
   constructor(
     private modalCtrl: ModalController,
+    private wordsService: WordsService,
     private fb: FormBuilder
   ) {
 
+    this.words = this.wordsService.words
+
     this.form = this.fb.group({
-      ch1: [this.words[0].homepage, []],
-      ch2: [this.words[1].homepage, []],
+    })
+
+    this.words.forEach((word, i) => {
+      this.form.addControl("ch" + (i + 1), new FormControl(word.homepage));
     })
 
     this.form.valueChanges.subscribe(data => {
-      console.log(data);
+      this.words.forEach((word, i) => {
+        this.wordsService.setHome(i, data["ch" + (i + 1)]);
+      })
     })
   }
 

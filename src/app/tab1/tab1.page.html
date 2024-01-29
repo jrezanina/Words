@@ -35,4 +35,25 @@
   <div *ngIf="word$ | async; let word">
     {{word.results[0].definition}}
   </div>
+
+  <div>
+    <h2>Toto jsou data z nastavení</h2>
+
+    <ng-container *ngFor="let item$ of words$">
+      <ng-container *ngIf="item$ | async; let word">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{word.word}}</ion-card-title>
+            <ion-card-subtitle>{{word.syllables.count}} Syllables</ion-card-subtitle>
+          </ion-card-header>
+
+          <ion-card-content *ngFor="let result of word.results; let i = index">
+            {{i + 1}}. {{result.definition}}
+          </ion-card-content>
+
+        </ion-card>
+      </ng-container>
+    </ng-container>
+  </div>
+
 </ion-content>
