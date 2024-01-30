@@ -64,4 +64,14 @@ export class WordsService {
       value: JSON.stringify(this.privateWords),
     });
   }
+
+  addWord(newWord: Word) {
+    this.privateWords.push(newWord);
+    this.privateWordsSubject.next(this.privateWords);
+    Preferences.set({
+      key: 'words',
+      value: JSON.stringify(this.privateWords),
+    });
+  }
+
 }

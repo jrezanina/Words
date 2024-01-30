@@ -1,16 +1,77 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>word-detail</ion-title>
+    <ion-buttons slot="start">
+      <ion-back-button text="Home"></ion-back-button>
+    </ion-buttons>
+    <ion-title>{{ word.word }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
-      <ion-title size="large">word-detail</ion-title>
+      <ion-title size="large">{{ word.word }}</ion-title>
     </ion-toolbar>
   </ion-header>
+  <h2 class="ion-padding"> Details about the word "{{ word.word }}" </h2>
+  <ion-row>
+    <ion-col class="ion-no-padding" size="6">
+      <ion-card color="{{getWordFrequency(word.frequency).color}}">
+        <ion-card-header>
+          <ion-card-title><ion-icon name="chatbubbles-outline"></ion-icon>
+            Usage rate
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item lines="none" color="{{getWordFrequency(word.frequency).color}}">{{getWordFrequency(word.frequency).word}} ({{ word.frequency }})</ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col class="ion-no-padding" size="6">
+      <ion-card color="success">
+        <ion-card-header>
+          <ion-card-title>
+            <ion-icon name="volume-high-outline"></ion-icon>
+            Pronunciation
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-item lines="none" color="success">{{ word.pronunciation.all }}</ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-card color="warning">
+    <ion-card-header>
+      <ion-card-title>
+        <ion-icon name="musical-notes-outline"></ion-icon>
+        Syllables
+      </ion-card-title>
+    </ion-card-header>
+    <ion-item lines="none" color="warn">Number of syllables: {{ word.syllables.count }}</ion-item>
+    <ion-card-content>
+      <ion-grid>
+        <ion-row>
+          <ion-col *ngFor="let syllable of word.syllables.list">
+            <ion-item lines="none" color="warn">
+              <ion-label class="ion-text-center">{{ syllable }}</ion-label>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-card-content>
+  </ion-card>
 
-  <div>{{word | json}}</div>
-
+  <ion-card *ngFor="let result of word.results; let i = index" color="danger">
+    <ion-card-header>
+      <ion-card-title>
+        {{i + 1}}. Meaning
+      </ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <ion-item lines="none" *ngIf="result.definition" color="danger">Definition: {{ result.definition }}</ion-item>
+      <ion-item lines="none" *ngIf="result.partOfSpeech" color="danger">Part of speech: {{ result.partOfSpeech }}</ion-item>
+      <ion-item lines="none" *ngIf="result.examples" color="danger">Example: {{ result.examples[0] }}</ion-item>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

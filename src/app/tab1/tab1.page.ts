@@ -11,9 +11,6 @@ import {WordsService} from "../services/words/words.service";
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page {
-  data: any = {};
-
-  word$: Observable<any>;
 
   words$: Observable<any>[] = [];
 
@@ -23,7 +20,6 @@ export class Tab1Page {
     private wordsService: WordsService
   ) {
     this.initWords();
-    this.word$ = this.wordsApiService.getByWord$("car")
   }
 
   private async initWords() {
@@ -38,11 +34,6 @@ export class Tab1Page {
     })
   }
 
-  fetchData() {
-    this.wordsApiService.getByWord$("car").subscribe(data => {
-      this.data = data;
-    })
-  }
   async openSettings() {
     const modal = await this.modalCtrl.create({
       component: SettingsPage,
@@ -53,6 +44,7 @@ export class Tab1Page {
     modal.onWillDismiss().then(_ => {
       this.initWords();
     });
+
   }
 
   setDetailData(word: any) {

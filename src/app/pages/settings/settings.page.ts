@@ -27,7 +27,6 @@ export class SettingsPage implements OnInit {
       words.forEach((word, i) => {
       this.form.addControl("ch" + (i + 1), new FormControl(word.homepage));
     })
-
     this.form.valueChanges.subscribe(data => {
       this.words.forEach((word, i) => {
         this.wordsService.setHome(i, data["ch" + (i + 1)]);

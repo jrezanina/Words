@@ -16,7 +16,7 @@
       <ion-title size="large">Settings</ion-title>
     </ion-toolbar>
   </ion-header>
-
+  <h2 class="ion-padding"> Add on homepage</h2>
   <ion-list [formGroup]="form">
     <ion-item *ngFor="let word of words; let i = index">
       <ion-checkbox slot="start" [value]="i" formControlName="ch{{i + 1}}"></ion-checkbox>
